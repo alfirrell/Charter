@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Charter</title>
+    <title>Charting's a drag...</title>
 </head>
-<body>
-<article id="top" >
-    <h1>Chart it!</h1>
-            <p>Select some series to chart...</p>
-</article>
+
 <style type="text/css">
 li {
   list-style: none;
@@ -24,6 +20,7 @@ li a {
   display: block;
 }
 
+
 *[draggable=true] {
   -moz-user-select:none;
   -khtml-user-drag: element;
@@ -31,55 +28,76 @@ li a {
 }
 </style>
 
+<body>
+<article id="top" >
+    <h1>Charting's a drag...</h1>
+            <p>Drag some series onto the chart to show them...</p>
+</article>
+  <button name="resetButton" onclick="resetGraph();">Reset Chart</button>
+<div>
 <canvas id="cvs" width="600" height="300">[No canvas support]</canvas>
+</div>
+<div>
   <ul>
-    <li><a href="#" id="one">Series 1</a></li>
     <li><a href="#" id="two">Series 2</a></li>
     <li><a href="#" id="three">Series 3</a></li>
+    <li><a href="#" id="four">Series 4</a></li>
   </ul>
 
-<script type="text/javascript" src="RGraph.common.core.js"></script>
-<script type="text/javascript" src="RGraph.common.adjusting.js"></script>
-<script type="text/javascript" src="RGraph.common.annotate.js"></script>
-<script type="text/javascript" src="RGraph.common.context.js"></script>
-<script type="text/javascript" src="RGraph.common.resizing.js"></script>
-<script type="text/javascript" src="RGraph.common.tooltips.js"></script>
-<script type="text/javascript" src="RGraph.common.zoom.js"></script>
+</div>
 
-<script type="text/javascript" src="h5utils.js"></script>
 
-<script type="text/javascript" src="RGraph.line.js"></script>
+
+<script type="text/javascript" src="js/rgraph/RGraph.common.core.js"></script>
+<script type="text/javascript" src="js/rgraph/RGraph.common.adjusting.js"></script>
+<script type="text/javascript" src="js/rgraph/RGraph.common.annotate.js"></script>
+<script type="text/javascript" src="js/rgraph/RGraph.common.context.js"></script>
+<script type="text/javascript" src="js/rgraph/RGraph.common.resizing.js"></script>
+<script type="text/javascript" src="js/rgraph/RGraph.common.tooltips.js"></script>
+<script type="text/javascript" src="js/rgraph/RGraph.common.zoom.js"></script>
+
+<script type="text/javascript" src="js/h5utils.js"></script>
+
+<script type="text/javascript" src="js/rgraph/RGraph.line.js"></script>
 
 <script>
 
-        var series1 = [10,4,17,40,25,19,20,25,30,29,30,29];
-        var series2 = [12,7,16,23,32,1,3,2,12,11,11,19];
-        var series3 = [3,8,12,28,34,13,21,12,19,18,71,15];
 
-        var data = [series1, series2];
-        var seriesList = ['Series 1', 'Series 2'];
+        var allData = {"Series 1" :
+                            {"data" : [10,4,17,40,25,19,20,25,30,29,30,29],
+                                "labels" : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                                "comments" : ['comment 1',null,null,null,null,null,null,null,null,null,null,null,'comment 12']
+                            },
+                        "Series 2" :
+        {"data" : [12,7,16,23,32,1,3,2,12,11,11,19],
+                                "labels" : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                                "comments" : [null,'comment 2',null,null,null,null,null,null,null,null,null,null,'comment 12']
+                            },
+                        "Series 3" :
+        {"data" : [3,8,12,28,34,13,21,12,19,18,31,15],
+                                "labels" : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                                "comments" : [null,null,'comment 3',null,null,null,null,null,null,null,null,null,'comment 12']
+                            },
+                        "Series 4" :
+        {"data" : [15,3,15,21,25,39,31,36,31,30,28,28],
+                                "labels" : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                                "comments" : [null,null,null,'comment 4',null,null,null,null,null,null,null,null,'comment 12']
+        }};
 
-        var myGraph = new RGraph.Line('cvs', data);
-        //myGraph.Set('chart.background.barcolor1', 'rgba(255,255,255,1)');
-        //myGraph.Set('chart.background.barcolor2', 'rgba(255,255,255,1)');
-        myGraph.Set('chart.background.grid.color', 'rgba(238,238,238,1)');
-        myGraph.Set('chart.colors', ['red','blue']);
-        myGraph.Set('chart.linewidth', 2);
-        myGraph.Set('chart.filled', false);
-        myGraph.Set('chart.hmargin', 5);
-        myGraph.Set('chart.labels', ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']);
-        myGraph.Set('chart.gutter', 40);
-        myGraph.Set('chart.zoom.mode', 'thumbnail');
-        myGraph.Set('chart.zoom.vdir', 'center');
-        myGraph.Set('chart.zoom.thumbnail.width', 100);
-        myGraph.Set('chart.zoom.thumbnail.height', 100);
-        myGraph.Set('chart.contextmenu', [ ['Zoom  whole graph', RGraph.Zoom] ]);
-        myGraph.Set('chart.key',seriesList);
+        //var allSeriesNames = ['Series 1', 'Series 2', 'Series 3', 'Series 4'];
+        //var allData = [series1, series2, series3, series4];
 
-        myGraph.Draw();
-            
-    RGraph.Register(myGraph);
+        var data = [];
+        var seriesList = [];
+        var comments = [];
+        var labels = [];
 
+
+        //var myGraph = initialiseGraph();
+
+        var myGraph = convertData(getIADBdata("Series 1"));
+
+        RGraph.Register(myGraph);
 
 
     myGraph.canvas.onmousemove = function (e)
@@ -143,6 +161,7 @@ li a {
     addEvent(el, 'dragstart', function (e) {
       e.dataTransfer.effectAllowed = 'copy'; // only dropEffect='copy' will be dropable
       e.dataTransfer.setData('Text', this.id); // required otherwise doesn't work
+        e.dataTransfer.setData('SeriesName', this.innerHTML);
     });
   }
 
@@ -165,23 +184,21 @@ li a {
     this.className = '';
   });
 
+
   addEvent(cvs, 'drop', function (e) {
     if (e.stopPropagation) e.stopPropagation(); // stops the browser from redirecting...why???
 
       var text = e.dataTransfer.getData('Text');
-    var el = document.getElementById(text);
+      var seriesName = e.dataTransfer.getData('SeriesName');
+      var el = document.getElementById(text);
 
-    el.parentNode.removeChild(el);
+        el.parentNode.removeChild(el);
 
-    // stupid nom text + fade effect
-    if (seriesList.indexOf(text) >= 0)
-    {
-        seriesList.push(text);
-        myGraph.Set('chart.key',seriesList);
+            //addSeriesIfNotAlreadyThere(seriesName);
 
-        myGraph.Redraw();
-    }
-    cvs.className = '';
+        convertData(getIADBdata(seriesName));
+
+            cvs.className = '';
     //yum.innerHTML = eat[parseInt(Math.random() * eat.length)];
 
     //var y = yum.cloneNode(true);
@@ -203,6 +220,93 @@ li a {
     return false;
   });
 
+        function resetGraph()
+        {
+            data = [];
+            seriesList = [];
+            comments = [];
+            labels = [];
+
+            //RGraph.Clear(document.getElementById("cvs"));
+            //var graph = getGraph();
+            //graph.Draw();
+
+            var myGraph = convertData(getIADBdata("Series 1"));
+
+            //RGraph.Register(myGraph);
+        }
+
+
+        function getGraph()
+        {
+            var myGraph = new RGraph.Line('cvs', data);
+            myGraph.Set('chart.key',seriesList);
+            //myGraph.Set('chart.background.barcolor1', 'rgba(255,255,255,1)');
+            //myGraph.Set('chart.background.barcolor2', 'rgba(255,255,255,1)');
+            myGraph.Set('chart.background.grid.color', 'rgba(238,238,238,1)');
+            myGraph.Set('chart.colors', ['red','blue','green','yellow']);
+            myGraph.Set('chart.linewidth', 2);
+            myGraph.Set('chart.filled', false);
+            myGraph.Set('chart.hmargin', 5);
+            myGraph.Set('chart.labels', labels);
+            myGraph.Set('chart.text.angle', 90);
+            myGraph.Set('chart.text.size', 8);
+            myGraph.Set('chart.gutter', 70);
+            myGraph.Set('chart.zoom.mode', 'thumbnail');
+            myGraph.Set('chart.zoom.vdir', 'center');
+            myGraph.Set('chart.zoom.thumbnail.width', 100);
+            myGraph.Set('chart.zoom.thumbnail.height', 100);
+//            myGraph.Set('chart.width', 550);
+//            myGraph.Set('chart.height', 300);
+
+            myGraph.Set('chart.tooltips', comments);
+
+    /*
+            myGraph.Set('chart.contextmenu',
+                [
+                    ['Zoom  whole graph', RGraph.Zoom],
+                    ['Reset Data', initialiseGraph()]
+                ]);
+*/
+
+
+            return myGraph;
+        }
+
+        function drawGraph()
+        {
+            RGraph.Clear(document.getElementById("cvs"));
+            var graph = getGraph()
+            graph.Draw();
+
+               return graph;
+        }
+
+         function addSeriesIfNotAlreadyThere(seriesName) {
+
+            if (seriesList.indexOf(seriesName) < 0) {
+
+                var series = allData[seriesName];
+                var seriesData = series["data"];
+                var seriesComments = series["comments"];
+                var seriesLabels =series["labels"];
+
+                //var seriesIndex = allSeriesNames.indexOf(seriesName);
+                //var series = allData[seriesIndex];
+
+                data.push(seriesData);
+                comments.push(seriesComments);
+                labels.push(seriesLabels)
+                seriesList.push(seriesName);
+            }
+                //RGraph.Redraw();
+            return drawGraph();
+
+        }
+
+        function initialiseGraph() {
+            return addSeriesIfNotAlreadyThere('Series 1');
+        }
 
         /**
     * Makes an AJAX call. It calls the given callback (a function) when ready
@@ -227,7 +331,95 @@ li a {
         httpRequest.open('GET', url, true);
         httpRequest.send();
     }
+        
+        function getIADBdata(seriesName)
+        {
+            var data = {"code": seriesName,
+                        "desc": "This is the series description",
+                        "comments":["any footnotes go here", "another footnote"],
+                        "observations": [{"dt": "2011/01/01", "val": (4 + Math.random(-1,1)) * 1000, "comments" : ["comment 1"]},
+                                        {"dt": "2011/01/02", "val": (5 + Math.random(-2,1)) * 1000, "comments":["comment about observation"]},
+                                        {"dt": "2011/01/03", "val": (5 + Math.random(-3,3)) * 1000},
+                                        {"dt": "2011/01/04", "val": (5 + Math.random(-2,2)) * 1000},
+                                        {"dt": "2011/01/05", "val": (6 + Math.random(-3,2)) * 1000},
+                                        {"dt": "2011/01/06", "val": (6 + Math.random(-1,1)) * 1000},
+                                        {"dt": "2011/01/07", "val": (7 + Math.random(-4,2)) * 1000},
+                                        {"dt": "2011/01/08", "val": (6 + Math.random(-4,2)) * 1000},
+                                        {"dt": "2011/01/09", "val": (6 + Math.random(-3,3)) * 1000},
+                                        {"dt": "2011/01/10", "val": (5 + Math.random(-3,2)) * 1000},
+                                        {"dt": "2011/01/11", "val": (5 + Math.random(-2,1)) * 1000},
+                                        {"dt": "2011/01/12", "val": (5 + Math.random(-1,2)) * 1000}
+                                        ]};
+                    /*,
+                        {"code": "Series 2",
+                        "desc": "This is the second series description",
+                        "comments":["any footnotes go here", "another footnote"],
+                        "observations": [{"dt": "2011/01/01", "val": (10 + Math.random(-1,1)) * 1000},
+                                        {"dt": "2011/01/02", "val": (10 + Math.random(-1,1)) * 1000, "comments":["comment about observation"]},
+                                        {"dt": "2011/01/03", "val": (10 + Math.random(-1,1)) * 1000},
+                                        {"dt": "2011/01/04", "val": (10 + Math.random(-1,1)) * 1000},
+                                        {"dt": "2011/01/05", "val": (10 + Math.random(-1,1)) * 1000},
+                                        {"dt": "2011/01/06", "val": (10 + Math.random(-1,1)) * 1000},
+                                        {"dt": "2011/01/07", "val": (10 + Math.random(-1,1)) * 1000},
+                                        {"dt": "2011/01/08", "val": (10 + Math.random(-1,1)) * 1000},
+                                        {"dt": "2011/01/09", "val": (10 + Math.random(-1,1)) * 1000},
+                                        {"dt": "2011/01/10", "val": (10 + Math.random(-1,1)) * 1000},
+                                        {"dt": "2011/01/11", "val": (10 + Math.random(-1,1)) * 1000},
+                                        {"dt": "2011/01/12", "val": (10 + Math.random(-1,1)) * 1000}]
+                        }]
+*/
+            return data;
+        }
 
+        function convertData (iadbData)
+        {
+            //for (iadbSeries in iadbData)
+            //{
+            var seriesName = iadbData["code"];
+            var description = iadbData["desc"];
+            var seriesComments = iadbData["comments"].toString();
+            var observations = iadbData["observations"];
+
+            var seriesData = new Array();
+            var seriesLabels = new Array();
+            var seriesComments = new Array();
+
+            for (i=0; i<observations.length; i++)
+            //for (var obs in observations)
+            {
+                var obs = observations[i];
+
+                var dateStr = obs["dt"];
+                var datum = obs["val"];
+                var obsComments = new Array(obs["comments"]);
+
+                seriesData.push(datum);
+                seriesLabels.push(dateStr);
+                comments.push(obsComments);
+            }
+
+            seriesList.push(seriesName);
+            data.push(seriesData);
+            //comments.push(new Array(seriesComments));
+
+            if (labels.length == 0)
+            {
+                labels = seriesLabels;
+            }
+
+
+            //comments.push(seriesComments);
+            //labels.push(seriesLabels);
+
+            return drawGraph();
+
+        }
+/*                    var allData = {"Series 1" :
+                            {"data" : [10,4,17,40,25,19,20,25,30,29,30,29],
+                                "labels" : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                                "comments" : ['comment 1',null,null,null,null,null,null,null,null,null,null,null,'comment 12']
+                            }
+        }*/
 
     /**
     * This sample callback function is called when the data is ready (readyState=4)
