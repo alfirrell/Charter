@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Hello Zing!</title>
+    <script type="text/javascript" src="../js/jquery-1.4.4.min.js"></script> 
+    <!--script type="text/javascript" src="../js/md5-min.js"></script--> 
+    <script type="text/javascript" src="../js/zingchart-html5beta-min.js"></script> 
+    <script type="text/javascript"> 
+    $(document).ready(function() {    
+        zingchart.render({         
+            id          : 'zingchart',         
+            output      : 'svg', //'canvas', /* or use 'svg', Internet Explorer versions 6,7 and 8 will render using VML */         
+            width       : 800,         
+            height      : 400,       
+            dataurl     : 'graphfile.txt'  // or data, to use a javascript variable containing JSON data
+            });
+    });
+    </script> 
+</head>
+<body>
+    <div id="zingchart"></div> 
+</body>
+</html>
